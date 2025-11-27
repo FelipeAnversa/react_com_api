@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import api from './services/api';
 
 function Piadas() {
     const [joke, setJoke] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const fetchJoke = async () => {
+    const Piada = async () => {
         setLoading(true);
         setError(null);
         try {
@@ -20,7 +21,7 @@ function Piadas() {
     };
 
     useEffect(() => {
-        fetchJoke();
+        Piada();
     }, []);
 
     return (
@@ -35,17 +36,15 @@ function Piadas() {
                     <h2>{joke.punchline}</h2>
                 </>
             )}
-            <button id="botao" onClick={fetchJoke}>Buscar Piada</button>
+            <button id="botao" onClick={Piada}>Buscar Piada</button>
         </div>
     );
 }
 
 async function pegarPiada() {
-    const API = "https://official-joke-api.appspot.com/random_joke";
     try {
-        const response = await fetch(API);
-        if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-        const data = await response.json();
+        const API = api.get("/random_joke");
+        const data = (await API).data;
         return {
             setup: data.setup,
             punchline: data.punchline
