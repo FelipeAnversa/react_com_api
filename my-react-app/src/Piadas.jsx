@@ -25,7 +25,16 @@ function Piadas() {
     }, []);
 
     return (
-        <div>
+        <div style={{
+            fontFamily: '"Arial", "Helvetica", "sans-serif"',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh'
+        }}>
             {loading && <h1>Carregando...</h1>}
             {error && <h1>{error}</h1>}
             {!loading && !error && !joke && <h1>Nenhuma piada encontrada</h1>}
@@ -36,7 +45,18 @@ function Piadas() {
                     <h2>{joke.punchline}</h2>
                 </>
             )}
-            <button id="botao" onClick={Piada}>Buscar Piada</button>
+            <button 
+                onClick={Piada} 
+                style={{
+                    fontSize: '30px',
+                    width: '200px',
+                    height: '100px',
+                    borderRadius: '10px',
+                    cursor: 'pointer'
+                }}
+            >
+                Buscar Piada
+            </button>
         </div>
     );
 }
