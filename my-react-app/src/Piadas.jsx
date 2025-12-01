@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from './services/api';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 function Piadas() {
     const [joke, setJoke] = useState(null);
@@ -33,30 +35,24 @@ function Piadas() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh'
+            height: '80vh'
         }}>
-            {loading && <h1>Carregando...</h1>}
+            {loading && <Typography fontWeight= 'fontWeightBold' fontSize={30}>Carregando...</Typography>}
             {error && <h1>{error}</h1>}
             {!loading && !error && !joke && <h1>Nenhuma piada encontrada</h1>}
 
             {!loading && !error && joke && (
                 <>
-                    <h1>{joke.setup}</h1>
-                    <h2>{joke.punchline}</h2>
+                    <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.setup}</Typography>
+                    <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.punchline}</Typography>
                 </>
             )}
-            <button 
+            <Button
                 onClick={Piada} 
-                style={{
-                    fontSize: '30px',
-                    width: '200px',
-                    height: '100px',
-                    borderRadius: '10px',
-                    cursor: 'pointer'
-                }}
+                variant="contained"
             >
                 Buscar Piada
-            </button>
+            </Button>
         </div>
     );
 }
