@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import api from './services/api';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function Piadas() {
     const [joke, setJoke] = useState(null);
@@ -26,34 +28,36 @@ function Piadas() {
         Piada();
     }, []);
 
-    return (
-        <div style={{
-            fontFamily: '"Arial", "Helvetica", "sans-serif"',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '80vh'
-        }}>
-            {loading && <Typography fontWeight= 'fontWeightBold' fontSize={30}>Carregando...</Typography>}
-            {error && <h1>{error}</h1>}
-            {!loading && !error && !joke && <h1>Nenhuma piada encontrada</h1>}
+    const theme = createTheme({
+        palette: {
+            custom: {
+                red: '#f00',
+                blue: '#00f'
+            },
+        },
+    });
 
-            {!loading && !error && joke && (
-                <>
-                    <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.setup}</Typography>
-                    <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.punchline}</Typography>
-                </>
-            )}
-            <Button
-                onClick={Piada} 
-                variant="contained"
-            >
-                Buscar Piada
-            </Button>
-        </div>
+    return (
+        <ThemeProvider theme={theme}>
+            <Box sx={{ textAlign: 'center' }}>
+                {loading && <Typography fontWeight= 'fontWeightBold' fontSize={30} sx={{ color: 'custom.blue', height: '50vh' }}>Carregando...</Typography>}
+                {error && <h1>{error}</h1>}
+                {!loading && !error && !joke && <Typography fontWeight= 'fontWeightBold' fontSize={30} sx={{ color: 'custom.red', height: '50vh' }}>Nenhuma piada encontrada</Typography>}
+
+                {!loading && !error && joke && (
+                    <>
+                        <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.setup}</Typography>
+                        <Typography fontWeight= 'fontWeightBold' fontSize={30}>{joke.punchline}</Typography>
+                    </>
+                )}
+                <Button
+                    onClick={Piada} 
+                    variant="contained"
+                >
+                    Buscar Piada
+                </Button>
+            </Box>
+        </ThemeProvider>
     );
 }
 
